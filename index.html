@@ -5,19 +5,33 @@
 <title>Html5</title>
 <script src="images/easeljs-0.7.1.min.js"></script>
 </head>
-<body onload="init();">
-<div style="align:center"><canvas id="canvas"></canvas></div>
+<body onload="init()">
+<div style="align:center"><canvas id="canvas" width="1440" height="600"></canvas></div>
 <script type="text/javascript">
 var stage;
+var imgContainer;
+var imgList=new Array();
 function init()
 {
 	stage=new createjs.Stage("canvas");
+	imgContainer=new createjs.Container();
+	stage.addChild(imgContainer);
 	createjs.Ticker.addEventListener("tick",tick);
+	for(var i=1;i<=4;i++)
+	{
+		var img=new BaseImage("images/"+String(i)+".jpg");
+		img.x=150;
+		img.y=100*i-45;
+		img.scaleX=img.scaleY=0.3;
+		imgContainer.addChild(img);
+
+	}
+	
 }
 	
 function tick(e)
 {
-
+	stage.update(e);
 }
 function BaseImage(src)
 {
