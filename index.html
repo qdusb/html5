@@ -20,8 +20,8 @@ function init()
 	for(var i=1;i<=4;i++)
 	{
 		var img=new BaseImage("images/"+String(i)+".jpg");
-		img.x=150;
-		img.y=100*i-45;
+		img.x=150+300*Math.ceil((i-1)%2);
+		img.y=100*Math.ceil(i/2)-45;
 		img.scaleX=img.scaleY=0.3;
 		imgContainer.addChild(img);
 
