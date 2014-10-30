@@ -35,12 +35,13 @@ function init()
 	}
 	mc.gotoAndStop(1);
 	mc.frame=1;
-	//mc.addEventListener("click",handleFrame);
+	mc.addEventListener("click",handleFrame);
 	imgContainer.addChild(mc);
 	stage.enableMouseOver(10);
 }
 function handleFrame()
 {
+	return;
 	mc.frame++;
 	if(mc.frame>4){
 		mc.frame=1;
