@@ -68,7 +68,7 @@ function BaseImage(src)
 	s.addEventListener("click",handleClick);
 	function handleClick(e)
 	{
-		TweenLite.to(s,0.3,{scaleX:s.scaleX*-1});
+		TweenLite.to(s,0.5,{scaleX:s.scaleX*-1});
 	}
 }
 BaseImage.prototype=new createjs.Container();
