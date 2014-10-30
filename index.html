@@ -3,14 +3,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Html5</title>
-<script src="images/easeljs-0.7.1.min.js"></script>
 <script src="images/TweenLite.min.js"></script>
+<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/tweenjs-0.4.0.min.js"></script>
+<script src="http://code.createjs.com/movieclip-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/preloadjs-0.3.0.min.js"></script>
+
 </head>
 <body onload="init()">
 <div style="align:center"><canvas id="canvas" width="1440" height="600"></canvas></div>
 <script type="text/javascript">
 var stage;
 var imgContainer;
+var mc;
 var imgList=new Array();
 function init()
 {
@@ -18,18 +23,31 @@ function init()
 	imgContainer=new createjs.Container();
 	stage.addChild(imgContainer);
 	createjs.Ticker.addEventListener("tick",tick);
+	mc=new createjs.MovieClip();
 	for(var i=1;i<=4;i++)
 	{
 		var img=new BaseImage("images/"+String(i)+".jpg");
-		img.x=150+300*Math.ceil((i-1)%2);
-		img.y=100*Math.ceil(i/2)-45;
+		img.x=150
+		img.y=45+90*(i-1);
 		img.scaleX=img.scaleY=0.3;
-		imgContainer.addChild(img);
-
+		
+		mc.timeline.addTween(createjs.Tween.get({}).to({state:[{t:img}]},i).wait(1));
 	}
+	mc.gotoAndStop(1);
+	mc.frame=1;
+	mc.addEventListener("click",handleFrame);
+	imgContainer.addChild(mc);
 	stage.enableMouseOver(10);
 }
-	
+function handleFrame()
+{
+	mc.frame++;
+	if(mc.frame>4){
+		mc.frame=1;
+	}
+	mc.gotoAndStop(mc.frame);
+
+}
 function tick(e)
 {
 	stage.update(e);
@@ -55,5 +73,6 @@ function BaseImage(src)
 }
 BaseImage.prototype=new createjs.Container();
 </script>
+mc.timeline.addTween(createjs.Tween.get({}).to({state:[{t:imgs[0]}]},1).to({state:[{t:img[1]}]},2).to({state:[{t:img[2]}]},3).to({state:[{t:img[3]}]},4).wait(1));
 </body>
 </html>
