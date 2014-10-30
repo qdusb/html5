@@ -31,11 +31,11 @@ function init()
 		img.y=45+90*(i-1);
 		img.scaleX=img.scaleY=0.3;
 		
-		mc.timeline.addTween(createjs.Tween.get({}).to({state:[{t:img}]},i).wait(1));
+		mc.timeline.addTween(createjs.Tween.get({}).to({state:[{t:img}]},1).wait(1));
 	}
 	mc.gotoAndStop(1);
 	mc.frame=1;
-	mc.addEventListener("click",handleFrame);
+	//mc.addEventListener("click",handleFrame);
 	imgContainer.addChild(mc);
 	stage.enableMouseOver(10);
 }
