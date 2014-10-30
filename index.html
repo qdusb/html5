@@ -2,9 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Html5-EaselJS-Banner</title>
+<title>Html5</title>
 <script src="images/easeljs-0.7.1.min.js"></script>
 </head>
-<body>
+<body onload="init();">
+<div style="align:center"><canvas id="canvas"></canvas></div>
+<script type="text/javascript">
+var stage;
+function init()
+{
+	stage=new createjs.Stage("canvas");
+	createjs.Ticker.addEventListener("tick",tick);
+}
+	
+function tick(e)
+{
+
+}
+function BaseImage(src)
+{
+	var s=this;
+	s.initialize();
+	var img=new Image();
+	img.onload=function(){
+		var bmp=new createjs.Bitmap(img);
+		bmp.regX=img.width>>1;
+		bmp.regY=img.height>>1;
+		s.addChild(bmp);
+	}
+	img.src=src;
+}
+BaseImage.prototype=new createjs.Container();
+</script>
 </body>
 </html>
