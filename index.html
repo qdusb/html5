@@ -46,22 +46,22 @@ function init()
 	var colors = ["#828b20", "#b0ac31", "#cbc53d", "#fad779", "#f9e4ad", "#faf2db", "#563512", "#9b4a0b", "#d36600", "#fe8a00", "#f9a71f"];
 	shapes=new Array();
 	
-	var radius=20;
-	var rings=10;
-	for(var j=0;j<3;j++){
+	var rings=6;
+	for(var j=0;j<20;j++){
 		var shape=new createjs.Shape();
+		var radius=10+5*Math.random();
 		shape.cursor="pointer";
 		shape.isClick=false;
 		for(var i=rings;i>0;i--){
 			shape.graphics.beginFill(colors[Math.floor(Math.random()*colors.length)]).drawCircle(0,0,radius*i/rings);
 		}
 
-		shape.speed=10-Math.ceil(20*Math.random());
+		shape.speed=5+Math.ceil(5*Math.random());
 		while(Math.abs(shape.speed)<5){
 			shape.speed=10-Math.ceil(20*Math.random());
 		}
-		shape.oX=(radius+100)*j+250;
-		shape.oY=radius+250*Math.random()+120;
+		shape.oX=600+200*Math.random();
+		shape.oY=450+1250*Math.random();
 		shape.set({x:shape.oX,y:shape.oY});
 		shape.addEventListener("click", shapeClickHandle);
 		stage.addChild(shape)
@@ -102,7 +102,8 @@ function tick(e)
 		var shape=shapes[k];
 		shape.rotation+=shape.speed;
 		shape.x=Math.sin(shape.rotation/180)*mRadius+shape.oX;
-		shape.y=Math.cos(shape.rotation/180)*mRadius*1.5+shape.oY;
+		shape.y-=shape.speed/3;
+		if(shape.y<0)shape.y=450+1250*Math.random();;
 	}
 	
 	//mRadius+=1
