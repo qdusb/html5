@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mainfest</title>
+<script src="images/TweenLite.min.js"></script>
+<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/tweenjs-0.4.0.min.js"></script>
+<script src="http://code.createjs.com/preloadjs-0.3.0.min.js"></script>
+</head>
+<body onload="init()">
+<div style="align:center"><canvas id="canvas" width="1440" height="600"></canvas></div>
+<script type="text/javascript">
+	var stage,mainfest;
+	function init(){
+		stage=new createjs.Stage("canvas");
+		mainfest=[
+			{src:"images/1.jpg",id:"d1"},
+			{src:"images/2.jpg",id:"d2"},
+			{src:"images/3.jpg",id:"d3"},
+			{src:"images/4.jpg",id:"d4"},
+		];
+		var loader=new createjs.LoadQueue(mainfest);
+		loader.addEventListener("fileload", fileLoad);
+		loader.addEventListener("complete", loadComplete)
+		createjs.Ticker.setFPS(30);
+		createjs.Ticker.addEventListener("tick", stage);
+	}
+	function fileLoad(e){
+		console.info(e);
+	}
+	function loadComplete(e){
+
+	}
+</script>
+
+</body>
+</html>
