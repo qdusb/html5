@@ -15,9 +15,24 @@
 <script>
 var stage;
 var imgList;
+var mc;
 function init(){
 
 	stage=new createjs.Stage("canvas");
+	stage.enableMouseOver(10);
+	mc=new createjs.MovieClip();
+	
+	stage.addChild(mc);
+	for(var i=1;i<=4;i++){
+		var img=new BaseImage("images/"+String(i)+".jpg");
+		img.scaleX=img.scaleY=0.3;
+		img.x=144+300*(i-1);
+		img.y=45
+		mc.gotoAndStop(i);
+		mc.addChild(img);
+	}
+	mc.cursor="pointer";
+	mc.gotoAndStop(1);
 	createjs.Ticker.addEventListener("tick",tick);
 }
 function tick(e)
