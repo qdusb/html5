@@ -10,27 +10,49 @@
 <body onload="init()">
 <div style="align:center"><canvas id="canvas" width="1440" height="600"></canvas></div>
 <script type="text/javascript">
-	var stage,mainfest;
+	var stage,manifest,images;
 	function init(){
 		stage=new createjs.Stage("canvas");
-		mainfest=[
+		images={};
+		manifest=[
 			{src:"images/1.jpg",id:"d1"},
 			{src:"images/2.jpg",id:"d2"},
-			{src:"images/3.jpg",id:"d3"},
+			{src:"images/32.jpg",id:"d3"},
 			{src:"images/4.jpg",id:"d4"},
 		];
-		var loader=new createjs.LoadQueue(mainfest);
+		var loader=new createjs.LoadQueue(false);
 		loader.addEventListener("fileload", fileLoad);
-		loader.addEventListener("complete", loadComplete)
+		loader.addEventListener("complete", loadComplete);
+		loader.addEventListener("error", fileError)
+		loader.loadManifest(manifest);
+
 		createjs.Ticker.setFPS(30);
 		createjs.Ticker.addEventListener("tick", stage);
 	}
-	function fileLoad(e){
+	function fileError(e)
+	{
 		console.info(e);
+	}
+	function fileLoad(e){
+
+		if (e.item.type == "image") { images[e.item.id] = e.result; }
+		var img=new BaseImg(e.result);
+		img.scaleX=img.scaleY=0.3;
+		img.x=300*(Object.keys(images).length-1)+150;
+		img.y=45;
+		stage.addChild(img);
 	}
 	function loadComplete(e){
 
 	}
+	function BaseImg(img)
+	{
+		var s=this;
+		s.initialize(img);
+		s.regX=s.image.width>>1;
+		s.regY=s.image.height>>1;
+	}
+	BaseImg.prototype=new createjs.Bitmap();
 </script>
 
 </body>
