@@ -82,7 +82,25 @@ Staff_IT.prototype={
 };
 var it=new Staff_IT();
 it.setInfo({name:"jack"});
-info(it.getInfo());
+
+var manifest=[
+	{name:"albe",glade:"Senior One",age:"16",sex:"male"},
+	{name:"amamd",glade:"Senior One",age:"16",sex:"male"},
+	{name:"bill",glade:"Senior One",age:"16",sex:"male"},
+	{name:"Lily",glade:"Senior One",age:"16",sex:"female"},
+	{name:"olioy",glade:"Senior One",age:"16",sex:"male"}
+];
+function Student(){
+	var s=this;
+	s.loadManifest=function(manifest){
+		for(var k in manifest){
+			var o=manifest[k];
+			info(o);
+		}
+	}
+}
+var student=new Student();
+student.loadManifest(manifest);
 </script>
 </body>
 </html>
