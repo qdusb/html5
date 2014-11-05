@@ -27,7 +27,8 @@ Staff.myJob=function(){
 Staff.myJob.call(this);
 Staff.myJob.call(jack);
 Staff.myJob.call(rose);
-Staff.myJob()
+Staff.myJob();
+
 //arguments
 function sum(){
 	var sum=0;
@@ -46,14 +47,42 @@ var p={
 }
 for(var k in p)Math[k]=p[k];
 
-
+function info(msg){
+	console.info(msg);
+}
+function avg(){
+	return 20;
+}
 //匿名函数
 (function(name,job){
 	var job="Teacher";
 	var salary="4000"; 
-	console.info(Math.sum());
+	//console.info(Math.sum());
 	//console.info("My name is "+name+". My job is "+job);
+	/*function avg(){
+		return 10;
+	}*/
 })("jack","COO");
+function Staff_IT(){
+	var s=this;
+	s.skills =["AS3.0","JS","PHP"];
+	s.level="seior";
+	s.info={name:'',age:'',sex:'',address:'',phone:'',level:s.level,skills:s.skills};
+}
+Staff_IT.prototype={
+	getSkills:function(){
+		return this.skills;
+	},
+	getInfo:function(){
+		return this.info;
+	},
+	setInfo:function(info){
+		for(var k in info)this.info[k]=info[k];
+	}
+};
+var it=new Staff_IT();
+it.setInfo({name:"jack"});
+info(it.getInfo());
 </script>
 </body>
 </html>
