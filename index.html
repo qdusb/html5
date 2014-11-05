@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Html5</title>
+<script src="images/TweenLite.min.js"></script>
+<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/tweenjs-0.4.0.min.js"></script>
+<script src="http://code.createjs.com/movieclip-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/preloadjs-0.3.0.min.js"></script>
+
+</head>
+<body onload="init()">
+<div style="align:center"><canvas id="canvas" width="1440" height="600"></canvas></div>
+<script type="text/javascript">
+var stage;
+var imgContainer;
+var mc;
+var imgList=new Array();
+var shapes;
+var stepR=0;
+var mRadius=30;
+function init()
+{
+	stage=new createjs.Stage("canvas");
+	stage.FPS=30;
+	imgContainer=new createjs.Container();
+	stage.addChild(imgContainer);
+	createjs.Ticker.addEventListener("tick",tick);
+	mc=new createjs.MovieClip();
+	for(var i=1;i<=4;i++)
+	{
+		var img=new BaseImage("images/"+String(i)+".jpg");
+		img.x=150
+		img.y=45+90*(i-1);
+		img.scaleX=img.scaleY=0.3;
+		
+		mc.timeline.addTween(createjs.Tween.get({}).to({state:[{t:img}]},i).wait(1));
+	}
+	mc.gotoAndStop(1);
+	mc.frame=1;
+	mc.cursor="pointer";
+	mc.addEventListener("click",handleFrame);
+
+
+	var colors = ["#828b20", "#b0ac31", "#cbc53d", "#fad779", "#f9e4ad", "#faf2db", "#563512", "#9b4a0b", "#d36600", "#fe8a00", "#f9a71f"];
+	shapes=new Array();
+	
+	var rings=6;
+	for(var j=0;j<20;j++){
+		var shape=new createjs.Shape();
+		var radius=10+5*Math.random();
+		shape.cursor="pointer";
+		shape.isClick=false;
+		for(var i=rings;i>0;i--){
+			shape.graphics.beginFill(colors[Math.floor(Math.random()*colors.length)]).drawCircle(0,0,radius*i/rings);
+		}
+
+		shape.speed=5+Math.ceil(5*Math.random());
+		while(Math.abs(shape.speed)<5){
+			shape.speed=10-Math.ceil(20*Math.random());
+		}
+		shape.oX=600+200*Math.random();
+		shape.oY=450+1250*Math.random();
+		shape.set({x:shape.oX,y:shape.oY});
+		shape.addEventListener("click", shapeClickHandle);
+		stage.addChild(shape)
+		shapes.push(shape);
+	}
+	
+	stage.enableMouseOver(10);
+}
+function shapeClickHandle(e)
+{
+	var shape=e.target;
+	shape.isClick=!shape.isClick;
+	if(shape.isClick==true)
+	{
+		shape.speed=0;
+	}
+	else
+	{
+		shape.speed=10-Math.ceil(20*Math.random());
+		while(Math.abs(shape.speed)<5){
+			shape.speed=10-Math.ceil(20*Math.random());
+		}
+	}
+}
+function handleFrame()
+{
+	mc.frame++;
+	if(mc.frame>4){
+		mc.frame=1;
+	}
+	mc.gotoAndStop(mc.frame);
+
+}
+function tick(e)
+{
+	for(var k in shapes)
+	{
+		var shape=shapes[k];
+		shape.rotation+=shape.speed;
+		shape.x=Math.sin(shape.rotation/180)*mRadius+shape.oX;
+		shape.y-=shape.speed/3;
+		if(shape.y<0)shape.y=450+1250*Math.random();;
+	}
+	
+	//mRadius+=1
+	//shape.scaleX=Math.sin(stepR/90)+0.5;
+	stage.update(e);
+}
+function BaseImage(src)
+{
+	var s=this;
+	s.initialize();
+	var img=new Image();
+	img.onload=function(){
+		var bmp=new createjs.Bitmap(img);
+		bmp.regX=img.width>>1;
+		bmp.regY=img.height>>1;
+		s.addChild(bmp);
+	}
+	img.src=src;
+	s.cursor="pointer";
+	s.addEventListener("click",handleClick);
+	function handleClick(e)
+	{
+		TweenLite.to(s,0.5,{scaleX:s.scaleX*-1});
+	}
+}
+BaseImage.prototype=new createjs.Container();
+</script>
+</body>
+</html>
