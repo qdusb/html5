@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript</title>
+</head>
+<body>
+<script>
+//arguments.callee 调用本身
+function factoial(num)
+{
+	if(num<=1){
+		return 1;
+	}else{
+		return num*arguments.callee(num-1);
+	}
+}
+</script>
+</body>
+</html>
